@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./Assets/css/main.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app" class="app">
+        <div class="card card--column card--border card--radius-big">
+            <header class="card__header">
+                Add New Facebook Pixel
+            </header>
+            <div class="tabs">
+                <label for="auto" class="tabs__item full-width" :class="{ 'tabs--active': tabSelect === 'auto' }">
+                    <input class="input__radio" type="radio" v-model="tabSelect" value="auto" id="auto">
+                    Auto input pixel
+                </label>
+                <label for="manual" class="tabs__item full-width" :class="{ 'tabs--active': tabSelect === 'manual' }">
+                    <input class="input__radio" type="radio" v-model="tabSelect" value="manual" id="manual">
+                    Manual input pixel
+                </label>
+            </div>
+            <div class="card__body">
+                <div v-if="tabSelect === 'auto'" class="card card--small card--info card--radius-small card--vertical-center">
+                        <div class="card--row flex--gap-10">
+                            <p class="avatar avatar--small">
+                                <img class="avatar__item" src="./Assets/img/avatar.png" alt="avatar" />
+                                <img class="avatar__item--p-bottom-right" src="./Assets/img/fb.svg" alt="Facebook" />
+                            </p>
+                            <div class="card--column flex--gap-5">
+                                <div class="text--strong">
+                                    Lotusprayer Store
+                                </div>
+                                <div class="text--small text--success">
+                                    <img src="./Assets/img/check.svg" alt="checked"/>
+                                    Connected
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn">Change Account</button>
+                </div>
+                <div v-if="tabSelect === 'auto'" class="input--group">
+                    <label for="bussinessAcount">Select Business Account</label>
+                    <select class="input" v-model="businessAccountSelected" @change="enablePixelAccountInput" ref="businessAccountSelect">
+                        <option value="" selected>Select your Businiess Account</option>
+                        <option v-for="item in listBusinessAccount" :value="item.id">{{ item.id }} - {{ item.name }}</option>
+                    </select>
+                </div>
+                <div v-if="tabSelect === 'auto'" class="input--group">
+                    <label class="input__label" for="pixel">Select Pixel</label>
+                    <select class="input" ref="pixelAccountSelect" disabled>
+                        <option  value="" disabled selected>Select your pixel</option>
+                        <option v-for="item in listPixelAccountByBusinessId" :value="item.id">{{ item.id }} - {{ item.parentId }} - {{ item.name }}</option>
+                    </select>
+                </div>
+                <div v-if="tabSelect === 'manual'" class="input--group" >
+                    <label class="input__label" for="pixel">Name this pixel</label>
+                    <input ref="inputNamePixel" type="text" class="input" placeholder="Input your pixel name"/>
+                </div>
+                <div v-if="tabSelect === 'manual'" class="input--group" >
+                    <label class="input__label" for="pixel">Enter Facebook Pixel ID</label>
+                    <input ref="inputFBPixelID" type="text" class="input" placeholder="Input your pixel id"/>
+                </div>
+                <div v-show="listPixelAccountByBusinessId.length == 0 && enableValidate" class="card card--small card--danger flex--start flex--gap-10">
+                    <img src="./Assets/img/delete.svg" alt="delete">
+                    <div class="card--column flex--gap-5 text--gray">
+                        <p class="text--strong">Missing pixel</p>
+                        <p class="text--small">You don't have any Facebook Pixels in this Business Account. Change Business Account or <a class="link text--small text--strong" href="/">Create New Facebook Pixel</a> first.</p>
+                    </div>
+                </div>
+                <div class="input--group">
+                    <label class="input__label" for="Target">Target</label>
+                    <select class="input">
+                        <option value="53425461676 - Rosy's Business">Entire page</option>
+                    </select>
+                </div>
+                <div class="card card--small card--none-padding">
+                    <div class="card--column flex--gap-5">
+                        <p class="text--strong">Conversion API</p>
+                        <p class="text--small text--light-gray">Facebook conversions API will help you collect accurate data and improve the performance of your Facebook ads in a post-iOS 14 update world. <a class="link text--small" href="/">Learn more</a></p>
+                    </div>
+                    <p> 
+                        <label class="btn__switch">
+                            <input class="btn__switch-input" type="checkbox" checked>
+                            <span class="btn__switch-slider btn__switch-round"></span>
+                        </label>
+                    </p>
+                </div>
+                <button class="btn btn--padding-small btn--orange text--normal flex--gap-10">
+                    <img src="./Assets/img/bell_bg.svg" alt="bell">
+                    <span>Please <span class="text--strong">UPGRADE</span> your plan to use Conversion API</span> 
+                </button>
+            </div>
+            <footer class="card__footer">
+                <button class="btn text--strong" @click="resetForm">Cancel</button>
+                <button class="btn btn--primary text--strong full-width">Save</button>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="./Assets/js/main.js"></script>
+</body>
+</html>
