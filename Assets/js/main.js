@@ -83,10 +83,13 @@ var vm = new Vue({
               },            
         ],
         businessAccountSelected: '',
-        enableValidate: false,
+        enableCheckFormAuto: false,
+        enableValidateFormManual: false,
+        namePixel: '',
+        FBIDPixel: '',
     },
     computed: {
-     listPixelAccountByBusinessId() {
+      listPixelAccountByBusinessId() {
         const arrResult = []
         for (const value of this.listPixelAccount) {
             if (value.parentId === this.businessAccountSelected) {
@@ -95,30 +98,55 @@ var vm = new Vue({
         }
 
         return arrResult;
-     }
+      },
+      validateInputNamePixel() {
+        if(this.enableValidateFormManual) {
+          let check = /^[a-zA-Z]+$/g.exec(this.namePixel);
+
+          return check
+        }
+      },
+      validateInputFBIDPIxel() {
+        if(this.enableValidateFormManual) {
+          let check = /^[0-9]+$/g.exec(this.FBIDPixel);
+
+          return check;
+        }
+      }
+    },
+    watch: {
+      tabSelect() {
+        if (this.tabSelect === 'auto') {
+          this.businessAccountSelected = '';
+          this.enableCheckFormAuto = false;
+        } else if (this.tabSelect === 'manual') {
+          this.namePixel = '';
+          this.FBIDPixel = '';
+          this.enableValidateFormManual = false;
+        }
+      }
     },
     methods: {
         enablePixelAccountInput() {
             selectPixelAccountEl = this.$refs.pixelAccountSelect;
             selectPixelAccountEl.disabled = false;
-            this.enableValidate = true;
+            this.enableCheckFormAuto = true;
+        },
+        enableValidateManualForm() {
+          this.enableValidateFormManual = true;
         },
         resetForm() {
             let businessAccountSelect = this.$refs.businessAccountSelect;
             let pixelAccountSelect = this.$refs.pixelAccountSelect;
-            let inputNamePixel = this.$refs.inputNamePixel;
-            let inputFBPixelID = this.$refs.inputFBPixelID;
 
-            console.log(this.tabSelect)
-
-            if(this.tabSelect == 'auto') {
+            if(this.tabSelect === 'auto') {
                 businessAccountSelect.selectedIndex = 0;
                 pixelAccountSelect.selectedIndex = 0;
                 pixelAccountSelect.disabled = true;
-            } else if(this.tabSelect == 'manual') {
-                inputNamePixel.value = '';
-                inputFBPixelID.value = '';
+            } else if(this.tabSelect === 'manual') {
+                this.namePixel = '';
+                this.FBIDPixel = '';
             }
-        }
+        },
     }
 })

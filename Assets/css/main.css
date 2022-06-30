@@ -297,15 +297,27 @@
   border: 1px solid #FF9600;
 }
 
+.btn--orange:hover {
+  color: #FFFFFF;
+  background: #FF9600;
+}
+
 .btn--primary {
   background-color: #5B86E5;
   color: #FFFFFF;
+}
+
+.btn--primary:hover {
+  background: rgba(91, 134, 229, 0.8);
 }
 
 .flex--start {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 .flex--gap-10 {

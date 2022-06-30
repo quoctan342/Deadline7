@@ -256,9 +256,18 @@
         border: 1px solid #FF9600;
     }
 
+    &--orange:hover {
+        color: #FFFFFF;
+        background: #FF9600;
+    }
+
     &--primary {
         background-color: #5B86E5;
         color: #FFFFFF;
+    }
+
+    &--primary:hover {
+        background: rgba(91,134,229,0.8);
     }
 }
 
@@ -266,6 +275,7 @@
 
     &--start {
         align-items: flex-start;
+        justify-content: flex-start;
     }
 
     &--gap-10 {
